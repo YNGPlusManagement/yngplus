@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YNG+</title>
+    <link rel="icon" href="FAVICON/YNG Plus FAVICON2.png" type="image/png">
+    <style>
+        /* Stili generali */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Aggiungi altezza 100% per evitare scrolling */
+        }
+
+        iframe {
+            border: none;
+            width: 100vw; /* Usa tutta la larghezza disponibile */
+            height: 100vh; /* Usa tutta l'altezza disponibile */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1; /* Livello del sito */
+        }
+
+        /* Striscia superiore */
+        #top-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px; /* Altezza leggermente aumentata */
+            background-color: #251E68; /* Colore modificato */
+            z-index: 2; /* Livello sopra l'iframe */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Mantieni ombra */
+        }
+
+        /* Testo nella striscia */
+        #top-banner span {
+            font-size: 1.2rem; /* Dimensione base del testo */
+            font-weight: bold;
+            color: white; /* Testo bianco per visibilità */
+            text-align: center;
+            font-family: 'Avenir', 'Helvetica', sans-serif; /* Font Avenir con fallback */
+        }
+
+        /* Adattamento per dispositivi mobili */
+        @media screen and (max-width: 768px) {
+            #top-banner {
+                height: 50px; /* Riduci altezza per schermi piccoli */
+            }
+            #top-banner span {
+                font-size: 1rem; /* Riduci dimensione del testo */
+            }
+
+            /* Blocca lo scroll nella modalità mobile */
+            body, html {
+                height: 100%; /* Blocca l'altezza */
+                overflow: auto; /* Rimuove lo scroll */
+            }
+
+            iframe {
+                height: calc(100vh - 50px); /* Riduci l'altezza dell'iframe per compensare la striscia */
+            }
+        }
+    </style>
+    <script>
+        // Funzione per ottenere le dimensioni effettive del viewport
+        function getViewportDimensions() {
+            return {
+                width: window.innerWidth,
+                height: window.innerHeight
+            };
+        }
+
+        // Funzione per aggiornare l'URL dell'iframe con le dimensioni effettive del viewport
+        function updateIframeSrc() {
+            const { width, height } = getViewportDimensions(); // Ottieni dimensioni del viewport
+            const iframe = document.getElementById('embedded-site');
+            const baseUrl = "https://alessandronovo001.wixsite.com/yngplus"; // URL del sito da incorporare
+
+            // Aggiungi le dimensioni del viewport come parametri nell'URL
+            iframe.src = `${baseUrl}?viewportWidth=${width}&viewportHeight=${height}`;
+        }
+
+        // Funzione per controllare se il dispositivo è mobile
+        function isMobileDevice() {
+            return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        // Funzione per gestire il reindirizzamento
+        function handleRedirection() {
+            if (isMobileDevice()) {
+                // URL della pagina di reindirizzamento
+                const mobileRedirectUrl = "https://example.com/mobile-version"; // Cambia con l'URL desiderato
+                window.location.href = mobileRedirectUrl;
+            }
+        }
+
+        // Esegui al caricamento della pagina
+        window.onload = function () {
+            handleRedirection();
+            updateIframeSrc();
+        };
+
+        // Aggiorna l'iframe in caso di ridimensionamento della finestra
+        window.onresize = updateIframeSrc;
+    </script>
+</head>
+<body>
+    <!-- Striscia superiore non rimovibile -->
+    <div id="top-banner">
+        <span>ISCRIVITI  ...É GRATUITO!</span>
+    </div>
+
+    <!-- Sito incorporato -->
+    <iframe id="embedded-site"></iframe>
+</body>
+</html>
